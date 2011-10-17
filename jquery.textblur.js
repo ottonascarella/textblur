@@ -1,9 +1,9 @@
 /* 
  * JQuery TextBlur Filter
+ * https://github.com/ottonascarella/TextBlur
  * Copyright (c) 2011 Otto Nascarella
  * licensed under the LGPL Version 3 license.
  * http://www.gnu.org/licenses/lgpl.html 
- * please do not forget to send any changes/improvements to the source >> contact@webrecipe.net
  */
 (function($) {
     
