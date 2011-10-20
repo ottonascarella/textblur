@@ -27,11 +27,11 @@
         }, // end of get
         set: function(elem, value) {
         	if (!$.browser.msie) {
-	        	if (typeof $(elem).data('style') == 'undefined') {
-							if (typeof $(elem).attr('style') == 'undefined')
-								$(elem).data('style', 'none');
+	        	if (typeof $(elem).data('textShadow') == 'undefined') {
+							if (typeof $(elem).css('textShadow') == 'undefined')
+								$(elem).data('textShadow', '');
 							else
-								$(elem).data('style', $(elem).attr('style'));
+								$(elem).data('textShadow', $(elem).css('textShadow'));
 						}
 						if (typeof $(elem).data('color') == 'undefined') $(elem).data('color', $(elem).css('color'));
 	
@@ -39,28 +39,23 @@
 							$(elem).css({color: 'transparent', textShadow: '0px 0px ' + parseInt(value) + 'px ' + $(elem).data('color') }); 
 						}
 						else {
-							if ($(elem).data('style') == 'none')
-								$(elem).removeAttr('style');
-							else 
-								$(elem).attr('style', $(elem).data('style'));
+							$(elem).css({color: $(elem).data('color'), textShadow: ''});
+							$(elem).removeData('color');
+							$(elem).removeData('textShadow'); 
 						}
 					} else {
-	        	if (typeof $(elem).data('style') == 'undefined') {
-							if (typeof $(elem).attr('style') == 'undefined')
-								$(elem).data('style', 'none');
+	        	if (typeof $(elem).data('filter') == 'undefined') {
+							if (typeof $(elem).css('filter') == 'undefined')
+								$(elem).data('filter', '');
 							else
-								$(elem).data('style', $(elem).attr('style'));
+								$(elem).data('filter', $(elem).css('filter'));
 						}
 	
 						if (value != 0)
 							$(elem).css('filter', 'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + parseInt(value) + ')');
-						else {
-							if ($(elem).data('style') == 'none')
-								$(elem).removeAttr('style');
-							else 
-								$(elem).attr('style', $(elem).data('style'));
-						}
-						
+						else 
+							$(elem).css('filter', $(elem).data('filter'));
+							$(elem).removeData('filter');						
 					}
 				} // end of set
     }; // end of css hooks
