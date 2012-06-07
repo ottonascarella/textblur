@@ -2,30 +2,37 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>TextBlur - a jQuery Plugin</title>
+
+<link href='http://fonts.googleapis.com/css?family=Ultra' rel='stylesheet' type='text/css'></head>
+
+<style type="text/css">
+	body {text-align: center; font-family: 'Ultra'; background-color: #eee; }
+	a, a:hover, a:active, a:visited {text-decoration: none; color: #000;}
+</style>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="jquery.textblur.js"></script>
 <script type="text/javascript">
-$(function() {
-	var h1 = $('h1'), h2 = $('h2'), h3 = $('h3'), sp = $('span');
-	h1.css({textBlur: 60}).delay(1000).animate({textBlur: 1}, 1000);
-	h2.css({textBlur: 60}).delay(1700).animate({textBlur: 1}, 1000);
-	h3.css({textBlur: 60}).delay(2400).animate({textBlur: 1}, 1000);
-	sp.css({position: 'absolute', bottom: 0, right: 0, display: 'none', fontSize: '100%'}).delay(2500).fadeIn('slow');
-});
+	$(function() {
+		var h1 = $('h1'), h2 = $('h2'), h3 = $('h3'), sp = $('span'), ww = $(window).width();
+		h1.css('fontSize', Math.round(ww/19.2));
+		h2.css('fontSize', Math.round(ww/24));
+		h3.css('fontSize', Math.round(ww/32));
+		sp.css('fontSize', Math.round(ww/96));
+
+		h1.css({textBlur: 60}).delay(1000).animate({textBlur: 0}, 1000);
+		h2.css({textBlur: 60}).delay(1700).animate({textBlur: 0}, 1000);
+		h3.css({textBlur: 60}).delay(2400).animate({textBlur: 0}, 1000);
+		sp.css({position: 'absolute', bottom: 0, right: 0, display: 'none'}).delay(2500).fadeIn('slow');
+	});
 </script>
-<link href='http://fonts.googleapis.com/css?family=Ultra' rel='stylesheet' type='text/css'></head>
-<style type="text/css">
-body {text-align: center; font-family: 'Ultra'; background-color: #eee; }
-h1 {font-size: 100px; font-weight: normal;}
-h2 {font-size: 80px; font-weight: normal;}
-h3 {font-size: 60px; font-weight: normal;}
-span {font-size: 20px; padding: 20px;}
-</style>
+
 <body>
-<h1>Isn't it good,</h1>
-<h2>to be able to use and and play</h2>
-<h3>with the Blur Filter with such ease in HTML5?</h3>
-<span>  TextBlur >>> a jQuery Plugin  </span>
+	<h1>Wouldn't it be good,</h1>
+	<h2>to be able to play</h2>
+	<h3>with the Blur Filter, without Flash?</h3>
+	<span>  <a href="http://github.com/ottonascarella/TextBlur">TextBlur >>> a jQuery Plugin</a>  </span>
 </body>
+
 </html>
