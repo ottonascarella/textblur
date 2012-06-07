@@ -1,8 +1,7 @@
 TextBlur
 ========
 
-TextBlur is a jQuery plugin that adds a new CSS hook (textBlur) to jQuery,
-so you can fake a Blur Filter using only CSS.
+TextBlur is a jQuery plugin that adds a CSS hook to jQuery so you can fake a Blur Filter on text using only CSS *text-shadow*.
 
 __Syntax could not be simpler:__
 
