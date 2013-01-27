@@ -2,85 +2,60 @@
  * JQuery TextBlur
  * https://github.com/ottonascarella/TextBlur
  * Copyright (c) 2011 Otto Nascarella
- * licensed under the GPL license.
- * http://www.gnu.org/licenses/gpl.html
+ * licensed under the GPL 2 license.
+ * http://www.gnu.org/licenses/gpl-2.0.html
  */
-(function($) {
-    var get, set;
-	if (!$.browser.msie) {
-		var p = $('<p>')[0];
-		get = function(elem, computed, extra) {
-			var str = elem.style.textShadow;
-			if (!str) {
-				$(elem).css('text-shadow','rgb(0, 0, 0) 0px 0px 0px');
-				return 0;
-			}
-			return str.split(' ')[5].split('px')[0];
-		};
+;(function($, undefined) {
+    var get, set, p = $('<p>')[0];
 
-		set = function(elem, value) {
-				if (typeof $(elem).data('textShadow') === 'undefined') {
-					if (typeof $(elem).css('textShadow') === 'undefined')
-						$(elem).data('textShadow', '');
-					else
-						$(elem).data('textShadow', elem.style.textShadow);
-				}
-				if (typeof $(elem).data('color') === 'undefined')
-						$(elem).data('color', elem.style.color);
-	
-				if (value !== 0) {
-					elem.style.color = 'rgba(0,0,0,0)';
-					elem.style.textShadow = '0px 0px ' + parseInt(value) + 'px ' + $(elem).data('color');
-				} else {
-					elem.style.color = $(elem).data('color');
-					elem.style.textShadow = '';
-					$(elem).removeData('color');
-					$(elem).removeData('textShadow');
-				}
-		};
+	if (!!p.style.textShadow) {
 
-		if (typeof p.style.textShadow === "undefined") {
-			get = set = function(elem, computed, extra) {};
-		}
+		return;  /// there's no textShadow? Exit plugin register...
 
 	} else {
-		
-		get = function(elem, computed, extra) {
-			var str = elem.style.filter;
-			if (!str) {
-				$(elem).css('filter','progid:DXImageTransform.Microsoft.Blur(pixelradius=0)');
-				return 0;
+
+		$.cssHooks['textBlur'] = {
+			get: function(elem, computed, extra) {
+				var shadow = elem.style.textShadow;
+				
+				if (!shadow)
+					return false;
+
+				else {
+					shadow = shadow.split(' ')[5] || shadow.split(' ')[2]; /// IE10 returns different string pattern for text-shadow;
+					return shadow.split('px')[0];
+				}
+
+			},
+			set: function(elem, value) {
+				var style = elem.style, color;
+
+				if ( !$(elem).data("textShadow") )  $(elem).data('textShadow', style.textShadow);  /// backs up original text-shadow css, if exists.
+				if ( !$(elem).data('color') ) $(elem).data('color', $(elem).css('color')); /// backs up original color
+				color = $(elem).data("color");
+
+				if (value !== 0) {
+
+					style.color = 'rgba(0,0,0,0)'; /// some opera versions don't show element if color is "transparent". IE10 does not show either way. :(
+					style.textShadow = '0px 0px ' + parseInt(value, 10) + 'px ' + color;
+
+				} else {
+
+					style.color = color;
+					style.textShadow = '';
+					$(elem).removeData('color').removeData('textShadow');
+
+				}
 			}
-			return str.slice(str.indexOf('radius=')+7,-1);
+		}; // end of css hooks
+
+		$.fx.step['textBlur'] = function(fx){
+			$.cssHooks['textBlur'].set(fx.elem, fx.now);
 		};
 
-		set = function(elem, value) {
-			if (typeof $(elem).data('filter') == 'undefined') {
-				if (typeof $(elem).css('filter') == 'undefined')
-					$(elem).data('filter', '');
-				else
-					$(elem).data('filter', $(elem).css('filter'));
-			}
-			if (value !== 0)
-				$(elem).css('filter', 'progid:DXImageTransform.Microsoft.Blur(pixelradius=' + parseInt(value) + ')');
-			else {
-				$(elem).css('filter', $(elem).data('filter'));
-				$(elem).removeData('filter');
-			}
-		};
 
-	} /// end of else
+	} /// end of else.
 
-
-    $.cssHooks['textBlur'] = {
-        get: get,
-		set: set
-	}; // end of css hooks
-    
-    $.fx.step['textBlur'] = function(fx){
-		$.cssHooks['textBlur'].set(fx.elem, fx.now);
-    };
-    
 })(jQuery);
 
 
