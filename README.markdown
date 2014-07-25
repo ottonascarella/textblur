@@ -11,4 +11,4 @@ or just
 
 $anyTextElement.animate({textBlur: 20}, 1000);
 
-Example page? Sure! [http://webrecipe.net/textblur](http://webrecipe.net/textblur)
+Example page? [Sure. Click here!](http://ottonascarella.github.io/textblur/ "Click here!")
